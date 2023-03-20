@@ -11,13 +11,59 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;">
-		<script src = "setMap.js" ></script>
-
 		<script>
-			 document.addEventListener('keydown', function(event) {
-      				if (event.code === 'ArrowLeft') {
-					$('body').css('background-image', "url('ImageStore/11W.png')");
-							}});
+			var pos = "row1col1";
+			var temp = "row1col1";
+			var heading = "north";
+			 $.getJSON("setMap.json", function(data){
+                                console.log(data);
+                                document.addEventListener('keydown', function(event) {
+                                        if (event.code === 'ArrowUp') {
+						temp = data[pos][heading]["next_pos"];
+                                                $('body').css('background-image', "url(" + data[temp][heading]["IMG"] + ")");
+						pos = temp;
+                                        }
+					if (event.code === 'ArrowDown') {
+                                                temp = data[pos][heading]["prev_pos"];
+                                                $('body').css('background-image', "url(" + data[temp][heading]["IMG"] + ")");
+                                                pos = temp;
+                                        }
+					if (event.code === 'ArrowLeft') {
+						switch(heading){
+										case "north":
+											heading = "west";
+											break;
+										case "west":
+											heading = "south";
+											break;
+										case "south":
+											heading = "east";
+											break;
+										case "east":
+											heading = "north";
+											break;
+												}
+                                                $('body').css('background-image', "url(" + data[pos][heading]["IMG"] + ")");
+					}
+					if (event.code === 'ArrowRight') {
+                                                switch(heading){
+                                                                                case "north":
+                                                                                        heading = "east";
+                                                                                        break;
+                                                                                case "west":
+                                                                                        heading = "north";
+                                                                                        break;
+                                                                                case "south":
+                                                                                        heading = "west";
+                                                                                        break;
+                                                                                case "east":
+                                                                                        heading = "south";
+                                                                                        break;
+                                                                                                }
+                                                $('body').css('background-image', "url(" + data[pos][heading]["IMG"] + ")");
+                                     }
+                                });
+                        });
 		</script>
 	</body>
 
