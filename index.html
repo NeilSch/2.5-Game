@@ -15,18 +15,33 @@
 			var pos = "row1col1";
 			var temp = "row1col1";
 			var heading = "north";
+			var audio = new Audio("ImageStore/error.mp3");
 			 $.getJSON("setMap.json", function(data){
                                 console.log(data);
                                 document.addEventListener('keydown', function(event) {
                                         if (event.code === 'ArrowUp') {
 						temp = data[pos][heading]["next_pos"];
+						if (temp == pos)
+									{
+										audio.play();
+												}
+						else
+									{
                                                 $('body').css('background-image', "url(" + data[temp][heading]["IMG"] + ")");
 						pos = temp;
+												}
                                         }
 					if (event.code === 'ArrowDown') {
                                                 temp = data[pos][heading]["prev_pos"];
-                                                $('body').css('background-image', "url(" + data[temp][heading]["IMG"] + ")");
+						if(temp == pos)
+									{
+										audio.play();
+												}
+						else 
+									{
+						$('body').css('background-image', "url(" + data[temp][heading]["IMG"] + ")");
                                                 pos = temp;
+												}
                                         }
 					if (event.code === 'ArrowLeft') {
 						switch(heading){
